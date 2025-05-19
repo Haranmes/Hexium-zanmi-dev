@@ -43,6 +43,7 @@ pub mod serial;
 pub mod task;
 pub mod utils;
 pub mod writer;
+pub mod acpi;
 
 pub fn init() {
     writer::init();
