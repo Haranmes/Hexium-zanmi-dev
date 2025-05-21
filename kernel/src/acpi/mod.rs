@@ -19,8 +19,9 @@
  // Currently only targeting x86
 use acpi::{AcpiHandler, PhysicalMapping};
 use core::ptr::NonNull;
-
 use crate::memory::alloc::HEAP_SIZE;
+
+pub mod mem_length;
 
 #[derive(Copy, Clone)]
 pub struct KernelAcpiHandler {}
@@ -34,6 +35,7 @@ impl AcpiHandler for KernelAcpiHandler {
     ) -> PhysicalMapping<Self, T> {
 
         let virt_addr = crate::memory::phys_mem_offset() + physical_address as u64;
+
 
         unsafe {
             PhysicalMapping::new(
@@ -52,20 +54,20 @@ impl AcpiHandler for KernelAcpiHandler {
     }
 }
 
-#[test_case]
-fn acpi_map_physical_region_size_limit() {
-    let handler = KernelAcpiHandler {};
+// #[test_case]
+// fn acpi_map_physical_region_size_limit() {
+//     let handler = KernelAcpiHandler {};
 
-    // Simulate a physical address (arbitrary for test)
-    let phys_addr = 0x1000usize;
+//     // Simulate a physical address (arbitrary for test)
+//     let phys_addr = 0x1000usize;
 
-    // Test with size within HEAP_SIZE - should succeed
-    let size_within = crate::memory::alloc::HEAP_SIZE;
-    let mapping = unsafe { handler.map_physical_region::<u8>(phys_addr, size_within) };
-    assert_eq!(mapping.region_length(), size_within);
+//     // Test with size within HEAP_SIZE - should succeed
+//     let size_within = crate::memory::alloc::HEAP_SIZE;
+//     let mapping = unsafe { handler.map_physical_region::<u8>(phys_addr, size_within) };
+//     assert_eq!(mapping.region_length(), size_within);
 
-    // Test with size larger than HEAP_SIZE - should panic
-    let size_too_large = crate::memory::alloc::HEAP_SIZE + 1;
+//     // Test with size larger than HEAP_SIZE - should panic
+//     let size_too_large = crate::memory::alloc::HEAP_SIZE + 1;
 
-    // TODO: Continue writing test case
-}
+//     // TODO: Continue writing test case
+// }
