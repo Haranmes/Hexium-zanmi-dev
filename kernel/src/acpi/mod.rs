@@ -19,9 +19,7 @@
  // Currently only targeting x86
 use acpi::{AcpiHandler, PhysicalMapping};
 use core::ptr::NonNull;
-use crate::memory::alloc::HEAP_SIZE;
 
-pub mod mem_length;
 
 #[derive(Copy, Clone)]
 pub struct KernelAcpiHandler {}
@@ -42,7 +40,7 @@ impl AcpiHandler for KernelAcpiHandler {
             physical_address,
             NonNull::new(virt_addr.as_mut_ptr()).unwrap(), // SAFETY: Memory at virt_addr is mapped by the HHDM and guaranteed to be valid by firmware
             size,
-            HEAP_SIZE,
+            size,
             self.clone(),
         )
         }
