@@ -17,8 +17,11 @@
  */
 
  // Currently only targeting x86
-use acpi::{AcpiHandler, PhysicalMapping};
-use core::ptr::NonNull;
+use acpi::{AcpiHandler, PhysicalMapping, AcpiTable};
+use limine::response::RsdpResponse;
+use core::{char, ptr::NonNull};
+
+use crate::boot::RSDP_REQUEST;
 
 
 #[derive(Copy, Clone)]
@@ -51,6 +54,19 @@ impl AcpiHandler for KernelAcpiHandler {
         // only called to unload ACPI
     }
 }
+
+let rsdp_pointer = boot::
+.as
+
+#[derive(Copy, Clone)]
+pub struct KernelAcpiTable();
+
+
+
+unsafe impl AcpiTable for KernelAcpiTable {
+    const SIGNATURE: acpi::sdt::Signature = ;
+}
+
 
 // #[test_case]
 // fn acpi_map_physical_region_size_limit() {

@@ -20,7 +20,7 @@ use limine::BaseRevision;
 use limine::modules::InternalModule;
 use limine::request::{
     FramebufferRequest, HhdmRequest, MemoryMapRequest, ModuleRequest, RequestsEndMarker,
-    RequestsStartMarker,
+    RequestsStartMarker, RsdpRequest,
 };
 
 #[used]
@@ -52,3 +52,8 @@ pub static _START_MARKER: RequestsStartMarker = RequestsStartMarker::new();
 #[used]
 #[unsafe(link_section = ".requests_end_marker")]
 pub static _END_MARKER: RequestsEndMarker = RequestsEndMarker::new();
+
+#[used]
+#[unsafe(link_section = ".requests")]
+pub static RSDP_REQUEST: RsdpRequest = RsdpRequest::new();
+

@@ -37,6 +37,7 @@ pub mod hal;
 pub mod interrupts;
 pub mod log;
 pub mod memory;
+pub mod rsdp;
 pub mod rsod;
 pub mod rtc;
 pub mod serial;
