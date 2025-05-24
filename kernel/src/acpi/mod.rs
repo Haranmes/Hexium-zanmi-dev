@@ -18,31 +18,12 @@
 
  // Currently only targeting x86
 
-use acpi_handler::init_acpi_handler;
-
-
-pub mod rsdp;
+pub mod acpi_table;
 pub mod acpi_handler;
 
+use acpi_table::init_acpi_table;
+
 pub fn init() {
-    init_acpi_handler();
+    init_acpi_table();
 }
 
-
-// #[test_case]
-// fn acpi_map_physical_region_size_limit() {
-//     let handler = KernelAcpiHandler {};
-
-//     // Simulate a physical address (arbitrary for test)
-//     let phys_addr = 0x1000usize;
-
-//     // Test with size within HEAP_SIZE - should succeed
-//     let size_within = crate::memory::alloc::HEAP_SIZE;
-//     let mapping = unsafe { handler.map_physical_region::<u8>(phys_addr, size_within) };
-//     assert_eq!(mapping.region_length(), size_within);
-
-//     // Test with size larger than HEAP_SIZE - should panic
-//     let size_too_large = crate::memory::alloc::HEAP_SIZE + 1;
-
-//     // TODO: Continue writing test case
-// }

@@ -50,11 +50,13 @@ pub fn init() {
     writer::init();
     interrupts::init();
     memory::init();
+    /* acpi::init(); */
 
     let mut vfs = hal::vfs::Vfs::new();
     fs::ramfs::init(&vfs);
 
     print_startup_message(&mut vfs);
+    acpi::init();
 
     // Issue#30: Commented out for now as the code doesn't run past this section. Will return it back.
     //let mut executor = crate::task::executor::Executor::new();
