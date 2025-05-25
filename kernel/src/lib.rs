@@ -26,21 +26,16 @@
 extern crate alloc;
 
 use alloc::string::String;
-use core::{arch::asm, panic::PanicInfo};
+use core::panic::PanicInfo;
 
-pub mod boot;
-pub mod debug;
+pub mod arch;
 pub mod devices;
-pub mod drivers;
 pub mod fs;
 pub mod hal;
-pub mod interrupts;
 pub mod log;
 pub mod memory;
 pub mod rsdp;
 pub mod rsod;
-pub mod rtc;
-pub mod serial;
 pub mod task;
 pub mod utils;
 pub mod writer;
@@ -59,9 +54,11 @@ pub fn init() {
     acpi::init();
 
     // Issue#30: Commented out for now as the code doesn't run past this section. Will return it back.
-    //let mut executor = crate::task::executor::Executor::new();
-    //let _ = executor.spawn(crate::task::Task::new(devices::keyboard::trace_keypresses()));
-    //executor.run();
+    //{
+    //    let mut executor = crate::task::executor::Executor::new();
+    //    let _ = executor.spawn(crate::task::Task::new(devices::keyboard::trace_keypresses()));
+    //    executor.run();
+    //}
 }
 
 fn print_startup_message(vfs: &hal::vfs::Vfs) {
@@ -85,22 +82,9 @@ fn print_startup_message(vfs: &hal::vfs::Vfs) {
     info!(
         "Hexium OS kernel v{} successfully initialized at {}",
         env!("CARGO_PKG_VERSION"),
-        unsafe { rtc::read_rtc() }
+        unsafe { arch::clock::read_clock() }
     );
     info!("{}", String::from_utf8_lossy(&buffer));
-}
-
-pub fn hlt_loop() -> ! {
-    loop {
-        unsafe {
-            #[cfg(target_arch = "x86_64")]
-            asm!("hlt");
-            #[cfg(any(target_arch = "aarch64", target_arch = "riscv64"))]
-            asm!("wfi");
-            #[cfg(target_arch = "loongarch64")]
-            asm!("idle 0");
-        }
-    }
 }
 
 pub fn test_panic_handler(info: &PanicInfo) -> ! {
@@ -128,7 +112,7 @@ pub enum QemuExitCode {
 }
 
 pub fn exit_qemu(exit_code: QemuExitCode) {
-    use x86_64::instructions::port::Port;
+    use x86_64c::instructions::port::Port;
 
     unsafe {
         let mut port = Port::new(0xf4);

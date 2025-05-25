@@ -124,7 +124,6 @@ dependencies = [
  "pc-keyboard",
  "spin",
  "uart_16550",
- "x86",
  "x86_64",
 ]
 
