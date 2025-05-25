@@ -16,10 +16,16 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 use acpi::rsdp::Rsdp;
-use crate::{acpi::acpi_handler::KernelAcpiHandler, boot, memory, trace};
+
+use crate::{
+    acpi::acpi_handler::KernelAcpiHandler, 
+    arch::memory, 
+    hal::rsdp::RSDP_REQUEST, 
+    trace
+};
 
 pub fn init_acpi_table() {
-    if let Some(rsdp_res) = boot::RSDP_REQUEST.get_response() {
+    if let Some(rsdp_res) = RSDP_REQUEST.get_response() {
         /* let phys_addr = rsdp_res.address() as u64;
         let virt_addr = memory::phys_mem_offset().as_u64() + phys_addr;
         let rsdp_ptr = virt_addr as *const Rsdp;
@@ -29,7 +35,7 @@ pub fn init_acpi_table() {
         trace!("Signature: {:?}", rsdp.signature());
         trace!("OEM ID: {:?}", rsdp.oem_id());
         trace!("Revision: {}", rsdp.revision()); */
-        trace!("Phys mem offset: 0x{:x}", crate::memory::phys_mem_offset().as_u64());
+        trace!("Phys mem offset: 0x{:x}", memory::hhdm_offset().as_u64());
         trace!("RSDP physical address: 0x{:x}", rsdp_res.address());
 
         

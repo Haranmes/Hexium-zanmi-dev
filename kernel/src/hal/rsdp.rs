@@ -16,4 +16,5 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
- 
+ #[cfg(target_arch = "x86_64")]
+pub use crate::arch::limine::RSDP_REQUEST;

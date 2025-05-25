@@ -33,8 +33,6 @@ pub mod devices;
 pub mod fs;
 pub mod hal;
 pub mod log;
-pub mod memory;
-pub mod rsdp;
 pub mod rsod;
 pub mod task;
 pub mod utils;
@@ -43,8 +41,7 @@ pub mod acpi;
 
 pub fn init() {
     writer::init();
-    interrupts::init();
-    memory::init();
+    arch::init();
     /* acpi::init(); */
 
     let mut vfs = hal::vfs::Vfs::new();

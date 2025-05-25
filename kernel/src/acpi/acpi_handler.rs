@@ -16,7 +16,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-use acpi::{AcpiHandler, PhysicalMapping};
+use acpi::{
+    AcpiHandler, 
+    PhysicalMapping,
+};
+use crate::{
+    arch::memory
+};
 use core::ptr::NonNull;
 use crate::trace;
     
@@ -30,7 +36,7 @@ impl AcpiHandler for KernelAcpiHandler {
         physical_address: usize,
         size: usize,
     ) -> PhysicalMapping<Self, T> {
-        let virt_addr = crate::memory::phys_mem_offset() + physical_address as u64;
+        let virt_addr = memory::hhdm_offset() + physical_address as u64;
 
         trace!(
             "Mapping physical address 0x{:x} (size: {}) to virtual address 0x{:x}",

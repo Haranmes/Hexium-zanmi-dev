@@ -21,6 +21,7 @@ use crate::trace;
 pub mod boot;
 pub mod clock;
 pub mod vfs;
+pub mod rsdp;
 
 pub fn init() {
     crate::arch::init();
