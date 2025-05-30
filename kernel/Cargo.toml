@@ -18,6 +18,12 @@ pc-keyboard = "0.7.0"
 x86 = "0.52.0"
 x86_64 = "0.14.2"
 uart_16550 = "0.3.2"
+smoltcp = { version = "0.12.0", default-features = false, features = [
+  "proto-ipv4",
+  "socket-udp",
+  "medium-ethernet"
+] }
+futures = { version = "0.3.31", features = ["executor"] }
 
 [[test]]
 name="should_panic"

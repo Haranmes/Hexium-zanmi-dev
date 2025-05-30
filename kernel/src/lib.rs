@@ -43,12 +43,13 @@ pub mod serial;
 pub mod task;
 pub mod utils;
 pub mod writer;
+pub mod network;
 
 pub fn init() {
     writer::init();
     interrupts::init();
     memory::init();
-
+    network::test();
     let mut vfs = hal::vfs::Vfs::new();
     fs::ramfs::init(&vfs);
 
