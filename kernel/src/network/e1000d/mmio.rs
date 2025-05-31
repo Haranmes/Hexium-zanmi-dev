@@ -17,7 +17,7 @@ impl MMIOUtils {
     }
 
     pub fn read64(address : u64) -> u64 {
-        unsafe { core::ptr::read_volatile(address as *const u64)}
+        unsafe { core::ptr::read_volatile(address as *const u64) }
     }
 
     // write
