@@ -1,7 +1,5 @@
 use core::arch::asm;
 
-use core::arch::asm;
-
 #[repr(C)]
 pub struct Ports;
 
